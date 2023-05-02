@@ -1,2 +1,5 @@
 # Node
 node_modules/
+
+# AWS CLI
+AWSCLIV2.pkg
