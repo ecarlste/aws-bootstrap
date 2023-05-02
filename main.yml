@@ -47,6 +47,39 @@ Resources:
         - arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess
         - arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole
 
+  BuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Ref AWS::StackName
+      ServiceRole: !GetAtt DeploymentRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:2.0
+      Source:
+        Type: CODEPIPELINE
+
+  DeploymentApplication:
+    Type: AWS::CodeDeploy::Application
+    Properties:
+      ApplicationName: !Ref AWS::StackName
+      ComputePlatform: Server
+
+  StagingDeploymentGroup:
+    Type: AWS::CodeDeploy::DeploymentGroup
+    DependsOn: Instance
+    Properties:
+      DeploymentGroupName: staging
+      ApplicationName: !Ref DeploymentApplication
+      DeploymentConfigName: CodeDeployDefault.AllAtOnce
+      ServiceRoleArn: !GetAtt DeploymentRole.Arn
+      Ec2TagFilters:
+        - Key: aws:cloudformation:stack-name
+          Type: KEY_AND_VALUE
+          Value: !Ref AWS::StackName
+
   SecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
