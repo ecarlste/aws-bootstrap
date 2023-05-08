@@ -376,6 +376,16 @@ Resources:
         - Key: Name
           Value: !Ref AWS::StackName
 
+  LoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref LoadBalancerTargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
+
   Instance:
     Type: AWS::EC2::Instance
     CreationPolicy:
