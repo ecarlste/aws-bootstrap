@@ -438,14 +438,8 @@ Resources:
           Value: !Ref AWS::StackName
 
 Outputs:
-  InstanceEndpoint1:
-    Description: The DNS name for the created instance
-    Value: !Sub 'http://${Instance.PublicDnsName}:8080'
+  LBEndpoint:
+    Description: The DNS name for the LB
+    Value: !Sub 'http://${LoadBalancer.DNSName}:80'
     Export:
-      Name: InstanceEndpoint1
-
-  InstanceEndpoint2:
-    Description: The DNS name for the created instance
-    Value: !Sub 'http://${Instance2.PublicDnsName}:8080'
-    Export:
-      Name: InstanceEndpoint2
+      Name: LBEndpoint
