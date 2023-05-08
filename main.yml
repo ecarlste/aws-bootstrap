@@ -285,6 +285,42 @@ Resources:
                 --region "${AWS::Region}" \
                 --resource "${!LOGICAL_ID}"
 
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Ref AWS::StackName
+
+  SubnetAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [0, !GetAZs '']
+      CidrBlock: 10.0.0.0/18
+      MapPublicIpOnLaunch: true <3>
+      Tags:
+        - Key: Name
+          Value: !Ref AWS::StackName
+        - Key: AZ
+          Value: !Select [0, !GetAZs '']
+
+  SubnetAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [1, !GetAZs '']
+      CidrBlock: 10.0.64.0/18
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Ref AWS::StackName
+        - Key: AZ
+          Value: !Select [1, !GetAZs '']
+
   Instance:
     Type: AWS::EC2::Instance
     CreationPolicy:
