@@ -406,9 +406,10 @@ Resources:
     Type: AWS::EC2::Instance
     CreationPolicy:
       ResourceSignal:
-        Timeout: PT10M
+        Timeout: PT5M
         Count: 1
     Properties:
+      SubnetId: !Ref SubnetAZ1
       LaunchTemplate:
         LaunchTemplateId: !Ref InstanceLaunchTemplate
         Version: !GetAtt InstanceLaunchTemplate.LatestVersionNumber
@@ -420,9 +421,10 @@ Resources:
     Type: AWS::EC2::Instance
     CreationPolicy:
       ResourceSignal:
-        Timeout: PT10M
+        Timeout: PT5M
         Count: 1
     Properties:
+      SubnetId: !Ref SubnetAZ2
       LaunchTemplate:
         LaunchTemplateId: !Ref InstanceLaunchTemplate
         Version: !GetAtt InstanceLaunchTemplate.LatestVersionNumber
