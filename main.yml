@@ -362,6 +362,20 @@ Resources:
       RouteTableId: !Ref RouteTable
       SubnetId: !Ref SubnetAZ2
 
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
+      Scheme: internet-facing
+      SecurityGroups:
+        - !GetAtt SecurityGroup.GroupId
+      Subnets:
+        - !Ref SubnetAZ1
+        - !Ref SubnetAZ2
+      Tags:
+        - Key: Name
+          Value: !Ref AWS::StackName
+
   Instance:
     Type: AWS::EC2::Instance
     CreationPolicy:
