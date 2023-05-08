@@ -1,7 +1,9 @@
 const { hostname } = require('os');
 const http = require('http');
 
-const message = `Hello Cloud from ${hostname()}\n`;
+const stackName = process.env.STACK_NAME || 'Unknown Stack';
+
+const message = `Hello Cloud from ${hostname()} in ${stackName}\n`;
 const port = 8080;
 
 const server = http.createServer((req, res) => {
