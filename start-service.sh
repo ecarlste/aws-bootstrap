@@ -20,4 +20,6 @@ export STACK_NAME=$(
       | jq -r ".Tags[0].Value"
 )
 
+echo "STACK_NAME=$STACK_NAME"
+
 npm run start 
