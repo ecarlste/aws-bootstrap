@@ -3,3 +3,6 @@ node_modules/
 
 # AWS CLI
 AWSCLIV2.pkg
+
+# Infra Deployment Run
+cfn_output/
